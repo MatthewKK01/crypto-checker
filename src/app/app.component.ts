@@ -7,10 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'crypto-tracker';
-
-  constructor() { }
-  currency: string = "usd"
-  sendCurrency(e: string) {
-    console.log(e);
+  selectedCurrency: string = "usd"
+  constructor() {
+    console.log(this.selectedCurrency);
   }
+
+
+  sendCurrency(event: string) {
+    console.log(event);
+  }
+
 }

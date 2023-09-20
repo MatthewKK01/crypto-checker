@@ -1,20 +1,20 @@
 <header>
-  <p>
-    <mat-toolbar class="d-flex">
-      <span>Crypto</span>
-      <span class="example-spacer"></span>
-      <mat-form-field>
-        <mat-select
-          (valueChange)="sendCurrency($event)"
-          class="text-sm"
-          [(ngModel)]="currency"
-        >
-          <mat-option selected value="usd">USD</mat-option>
-          <mat-option value="eur">EUR</mat-option>
-          <mat-option value="gbp">GBP</mat-option>
-          <mat-option value="gel">GEL</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-toolbar>
-  </p>
+  <mat-toolbar class="d-flex">
+    <span>Crypto</span>
+    <span class="example-spacer"></span>
+    <mat-form-field appearance="outline">
+      <mat-select
+        (valueChange)="sendCurrency($event)"
+        class="text-sm"
+        [(ngModel)]="selectedCurrency"
+      >
+        <mat-option selected value="usd">USD</mat-option>
+        <mat-option value="eur">EUR</mat-option>
+        <mat-option value="gbp">GBP</mat-option>
+        <mat-option value="gel">GEL</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-toolbar>
 </header>
+
+<router-outlet></router-outlet>
