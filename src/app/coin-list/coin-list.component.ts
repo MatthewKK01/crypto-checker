@@ -7,6 +7,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { Router } from '@angular/router';
 
 
 
@@ -16,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrls: ['./coin-list.component.scss']
 })
 export class CoinListComponent implements OnInit {
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private router: Router) {
   }
   bannerData: any = [];
 
@@ -52,5 +53,9 @@ export class CoinListComponent implements OnInit {
   }
   getTrendingData() {
     this.api.getTrendingCurrency().subscribe(res => console.log(res))
+  }
+
+  navigateToDetails(row: any) {
+    this.router.navigate(["coin-detail", row.id]);
   }
 }
