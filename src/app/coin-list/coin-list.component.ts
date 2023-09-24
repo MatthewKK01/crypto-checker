@@ -39,7 +39,7 @@ export class CoinListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBannerData();
-    // this.getTrendingData();
+    this.getTrendingData();
   }
 
   getBannerData() {
@@ -47,6 +47,7 @@ export class CoinListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.bannerData = res
     })
   }
   getTrendingData() {

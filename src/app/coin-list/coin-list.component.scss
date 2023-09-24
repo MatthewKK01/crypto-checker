@@ -58,3 +58,19 @@
 table {
     width: 100%;
 }
+
+:host ::ng-deep .mat-mdc-sort-header-content {
+    color: #fff;
+}
+
+:host ::ng-deep .mat-mdc-paginator-outer-container {
+    background-color: rgb(36, 37, 37);
+}
+
+:host ::ng-deep tr.mat-mdc-header-row {
+    background-color: #009688;
+}
+
+:host ::ng-deep tr.mat-mdc-row {
+    height: 70px;
+}

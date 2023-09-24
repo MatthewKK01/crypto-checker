@@ -45,7 +45,7 @@
     <input
       matInput
       (keyup)="applyFilter($event)"
-      placeholder="Ex. Mia"
+      placeholder="Ex. BTC"
       #input
     />
   </mat-form-field>
@@ -55,27 +55,32 @@
       <!-- Symbol Column -->
       <ng-container matColumnDef="symbol">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
-        <td mat-cell *matCellDef="let row">{{ row.symbol }}</td>
+        <td mat-cell *matCellDef="let row">
+          <img width="50" [src]="row.image" alt="" />
+          <span class="mx-2">{{ row.symbol | uppercase }}</span>
+        </td>
       </ng-container>
 
       <!-- Progress Column -->
       <ng-container matColumnDef="current_price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-        <td mat-cell *matCellDef="let row">{{ row.current_price }}%</td>
+        <td mat-cell *matCellDef="let row">
+          {{ row.current_price | currency : "USD" }}
+        </td>
       </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="price_change_percentage_24h">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>24h Change</th>
         <td mat-cell *matCellDef="let row">
-          {{ row.price_change_percentage_24h }}
+          {{ row.price_change_percentage_24h }}%
         </td>
       </ng-container>
 
       <!-- Fruit Column -->
       <ng-container matColumnDef="market_cap">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Market Cap</th>
-        <td mat-cell *matCellDef="let row">{{ row.market_cap }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.market_cap | currency }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -90,7 +95,7 @@
     </table>
 
     <mat-paginator
-      [pageSizeOptions]="[5, 10, 25, 100]"
+      [pageSizeOptions]="[10, 15, 50, 100]"
       aria-label="Select page of users"
     ></mat-paginator>
   </div>
