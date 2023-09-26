@@ -13,15 +13,26 @@
           ><br />
           <span class="title">Current Price: </span>
           <span class="value">{{
-            coinData?.market_data.current_price.inr | currency : currency
+            coinData?.market_data.current_price.inr
+              | currency : currency.toUpperCase()
           }}</span
           ><br />
           <span class="title">Market Cap: </span>
           <span class="value">{{
-            coinData?.market_data.market_cap.inr | currency : currency
+            coinData?.market_data.market_cap.inr
+              | currency : currency.toUpperCase()
           }}</span>
         </div>
       </div>
+    </div>
+    <div class="col-md-8 d-flex align-items-center">
+      <canvas
+        baseChart
+        style="width: 300px"
+        [type]="ChartType"
+        [options]="chartOption"
+        [data]="ChartData"
+      ></canvas>
     </div>
   </div>
 </div>
