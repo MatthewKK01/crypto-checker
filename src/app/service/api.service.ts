@@ -8,11 +8,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getAllData() {
-    return this.http.get<any>(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`)
+  getAllData(currency: string) {
+    return this.http.get<any>(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=100&page=1&sparkline=false&locale=en`)
   }
-  getTrendingCurrency() {
-    return this.http.get<any>(`https://api.coingecko.com/api/v3/search/trending`)
+  getTrendingCurrency(currency: string) {
+    return this.http.get<any>(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`)
   }
   getGrpahicalCurrencyData(coinId: string, currency: string, days: number) {
     return this.http.get<any>(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency}&days=${days}`)

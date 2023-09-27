@@ -8,6 +8,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Router } from '@angular/router';
+import { CurrencyService } from '../service/currency-service.service';
 
 
 
@@ -17,10 +18,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./coin-list.component.scss']
 })
 export class CoinListComponent implements OnInit {
-  constructor(private api: ApiService, private router: Router) {
+  constructor(private api: ApiService, private router: Router, private currencyService: CurrencyService) {
   }
   bannerData: any = [];
-
+  currency: string = 'inr'.toUpperCase()
 
   displayedColumns: string[] = [`symbol`, `current_price`, `price_change_percentage_24h`, `market_cap`]
   dataSource!: MatTableDataSource<any>;
@@ -39,12 +40,17 @@ export class CoinListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getBannerData();
-    this.getTrendingData();
+
+    this.currencyService.getCurrency().subscribe((val) => {
+      this.currency = val.toUpperCase()
+      this.getBannerData();
+      this.getTrendingData();
+    })
   }
 
   getBannerData() {
-    this.api.getAllData().subscribe(res => {
+    this.api.getAllData(this.currency).subscribe(res => {
+      console.log("all data currency", this.currency);
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -52,7 +58,10 @@ export class CoinListComponent implements OnInit {
     })
   }
   getTrendingData() {
-    this.api.getTrendingCurrency().subscribe(res => console.log(res))
+    this.api.getTrendingCurrency(this.currency).subscribe(res => {
+      console.log("Trending Currency", this.currency);
+      console.log(res)
+    })
   }
 
   navigateToDetails(row: any) {

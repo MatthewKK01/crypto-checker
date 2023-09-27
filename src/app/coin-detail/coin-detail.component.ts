@@ -3,6 +3,7 @@ import { ApiService } from '../service/api.service';
 import { ActivatedRoute } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from "chart.js"
+import { CurrencyService } from '../service/currency-service.service';
 
 @Component({
   selector: 'app-coin-detail',
@@ -14,7 +15,7 @@ export class CoinDetailComponent implements OnInit {
   coinData: any;
   coinId!: string;
   days: number = 30;
-  currency: string = "usd"
+  currency!: string;
 
   public ChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -47,7 +48,7 @@ export class CoinDetailComponent implements OnInit {
 
   @ViewChild(BaseChartDirective) myLineChart !: BaseChartDirective;
 
-  constructor(private api: ApiService, private route: ActivatedRoute) { }
+  constructor(private api: ApiService, private route: ActivatedRoute, private currencyService: CurrencyService) { }
 
   ngOnInit(): void {
     //get :id param
@@ -56,6 +57,12 @@ export class CoinDetailComponent implements OnInit {
     })
     this.getCoinData()
     this.getGraphData()
+    this.currencyService.getCurrency().subscribe(val => {
+      this.currency = val
+      this.getCoinData()
+      this.getGraphData()
+    })
+
   }
 
   getCoinData() {
