@@ -15,7 +15,7 @@ export class CoinDetailComponent implements OnInit {
   coinData: any;
   coinId!: string;
   days: number = 30;
-  currency!: string;
+  currency: string = "usd".toUpperCase();
 
   public ChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -58,19 +58,43 @@ export class CoinDetailComponent implements OnInit {
     this.getCoinData()
     this.getGraphData()
     this.currencyService.getCurrency().subscribe(val => {
-      this.currency = val
-      this.getCoinData()
+      this.currency = val.toUpperCase();
       this.getGraphData()
+      this.getCoinData()
     })
 
   }
 
   getCoinData() {
-    this.api.getCurrencyById(this.coinId).subscribe((res) => { console.log(res); this.coinData = res });
+    this.api.getCurrencyById(this.coinId).subscribe((res) => {
+      switch (this.currency) {
+        case "USD":
+          res.market_data.current_price.inr = res.market_data.current_price.usd;
+          res.market_data.market_cap.inr = res.market_data.market_cap.usd;
+          break;
+        case "EUR":
+          res.market_data.current_price.inr = res.market_data.current_price.eur;
+          res.market_data.market_cap.inr = res.market_data.market_cap.eur;
+          break;
+        case "GBP":
+          res.market_data.current_price.inr = res.market_data.current_price.gbp;
+          res.market_data.market_cap.inr = res.market_data.market_cap.gbp;
+          break;
+
+        // Default case, no conversion needed
+        default:
+          res.market_data.current_price.inr = res.market_data.current_price.inr;
+          res.market_data.market_cap.inr = res.market_data.market_cap.inr;
+          break;
+      }
+
+      this.coinData = res;
+    });
+
   }
 
   getGraphData() {
-    this.api.getGrpahicalCurrencyData(this.coinId, this.currency, this.days).subscribe((res) => {
+    this.api.getGrpahicalCurrencyData(this.coinId, this.currency.toUpperCase(), this.days).subscribe((res) => {
       setTimeout(() => {
         this.myLineChart.chart?.update();
       }, 200);
