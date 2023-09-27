@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-8 d-flex align-items-center">
+    <div class="col-md-8 d-flex justify-content-center flex-column">
       <canvas
         baseChart
         style="width: 300px"
@@ -33,6 +33,18 @@
         [options]="chartOption"
         [data]="ChartData"
       ></canvas>
+      <div class="d-flex justify-content-around">
+        <button (click)="getGraphData(1)" class="btn btn-custom">1 Day</button>
+        <button (click)="getGraphData(30)" class="btn btn-custom">
+          30 Days
+        </button>
+        <button (click)="getGraphData(90)" class="btn btn-custom">
+          90 Days
+        </button>
+        <button (click)="getGraphData(365)" class="btn btn-custom">
+          365 Days
+        </button>
+      </div>
     </div>
   </div>
 </div>
